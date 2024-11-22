@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 
 import TpEstructuraModelos.FakeNew;
+import TpEstructuraModelos.Refutacion;
 
 public class FakeNew_DAO {
 	
@@ -339,4 +340,55 @@ public class FakeNew_DAO {
 	
 	
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		public void refutacionAltas(Refutacion r, FakeNew fk)
+		{
+			String sqlInsertarRefutacion = "INSERT INTO Refutacion(fechaRetr, fuentesOrigen, organismoOfi, fakenew, refutador) VALUES (?, ?, ?, ?, ?);";
+			Connection conexion = conectar();
+			try {
+				
+				System.out.println("CONECTO ALTAS FAKE NEW");
+				// QUERYS SQL
+				PreparedStatement psInsertarRN = conexion.prepareStatement(sqlInsertarRefutacion);
+		
+
+				// Insertar TABLA INTERMEDIA Fake News
+				psInsertarRN.setDate(1, java.sql.Date.valueOf(r.getFechaRefutada()));
+				psInsertarRN.setString(2, r.getFuentes());
+				psInsertarRN.setBoolean(3, r.isOrganismoOficial());
+				psInsertarRN.setString(4, fk.getTitulo());
+				psInsertarRN.setString(5, r.getRefutador().getNombre());
+				
+
+		
+
+				int affectedRows = psInsertarRN.executeUpdate();
+				System.out.println("INSERTO ALTAS REFUTACIOn");
+				
+			} catch (SQLException x) {
+				// TODO Auto-generated catch block
+				x.printStackTrace();
+			} finally {
+				if (conexion != null) {
+					try {
+						conexion.close();
+					} catch (SQLException x) {
+						// TODO: handle exception
+						x.printStackTrace();
+					}
+				}
+			}
+		}
+		
+		
+		
+		
 }
