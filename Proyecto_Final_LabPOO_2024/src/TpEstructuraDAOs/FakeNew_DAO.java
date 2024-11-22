@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+
+
 import TpEstructuraModelos.FakeNew;
 
 public class FakeNew_DAO {
@@ -15,7 +17,7 @@ public class FakeNew_DAO {
 	
 	
 	
-	public String buscar_categoria(int i)
+	public String buscar_categorianNombre(int i)
 	{
 		if (i == 1)
 		{
@@ -39,8 +41,32 @@ public class FakeNew_DAO {
 		}
 		
 	}
+	public int  buscar_categoriaNum(String i)
+	{
+		if (i == "Contenido Engañoso")
+		{
+			return 1;
+		}
+		else if (i == "Conetexto Falso")
+		{
+			return 2;
+		}
+		else if (i == "Contenido Manipulado")
+		{
+			return 3;
+		}
+		else if (i == "Desinformacion")
+		{
+			return 4;
+		}
+		else 
+		{
+			return 0;
+		}
+		
+	}
 	
-	public String buscar_MedioOrigen(int i)
+	public String buscar_MedioOrigenNombre(int i)
 	{
 		if (i == 1)
 		{
@@ -58,14 +84,33 @@ public class FakeNew_DAO {
 		{
 			return null;
 		}
+	}
+		public int buscar_MedioOrigenNum(String i)
+		{
+			if (i == "Red Social")
+			{
+				return 1;
+			}
+			else if (i == "Medio Tradicional")
+			{
+				return 2;
+			}
+			else if (i == "Diario Digital")
+			{
+				return 3;
+			}
+			else 
+			{
+				return 0;
+			}
 		
 	}
 	
 	//CONEXION CON LA BASE DE DATOS
 	public static Connection conectar() {
-		String url = "jdbc:mysql://localhost:3306/tp_poo_2024";
+		String url = "jdbc:mysql://localhost:3306/tp_poo";
 		String usr = "root";
-		String pass = "admin";
+		String pass = "mapadou2342";
 		Connection conexion = null;
 		try {
 			conexion = DriverManager.getConnection(url, usr, pass);
@@ -118,7 +163,7 @@ public class FakeNew_DAO {
 				FakeNew u = new FakeNew(titulo, descripcion, creador, medioOrigen,fechaApa ,categoria);
 				FakeNewS.add(u);
 				System.out.println("Titulo: " + titulo + " descripcion" + descripcion + "creador" + categoria
-						+ "Fecha Aparicion" + fechaApa + "MedioOrigen" + buscar_MedioOrigen(medioOrigen) + "Categoria" + buscar_categoria(categoria));
+						+ "Fecha Aparicion" + fechaApa + "MedioOrigen" + buscar_MedioOrigenNombre(medioOrigen) + "Categoria" + buscar_categorianNombre(categoria));
 			}
 
 		} catch (SQLException x) {
@@ -235,7 +280,7 @@ public class FakeNew_DAO {
 					
 					
 					int tablas_afectadas = stmt_Update.executeUpdate();
-
+					System.out.println("SE MODIFICO FAKE NEW");
 
 				} catch (SQLException x) {
 					// TODO Auto-generated catch block
@@ -259,13 +304,39 @@ public class FakeNew_DAO {
 		
 		
 		
+
 		
+		public ArrayList<FakeNew> buscarPorTitulo(FakeNew fk)
+		{
+			ArrayList<FakeNew> resultados = new ArrayList<FakeNew>();
+			
+			try {
+				
+				Connection conexion = conectar();
+				PreparedStatement stmt = conexion.prepareStatement("SELECT * FROM FakeNews WHERE titulo LIKE ?"); 
+    			stmt.setString(1, "%" + fk.getTitulo() + "%");
+				
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) 
+				{
+					FakeNew fakenew = new FakeNew(rs.getString("titulo"),
+							rs.getString("descripcion"),
+							rs.getString("creador"),
+							rs.getInt("MedioOrigen"),
+							rs.getDate("fechaApa").toLocalDate(),
+							rs.getInt("categoria"));
+							resultados.add(fakenew);
+				}
+				
+				
+			} catch (Exception e) 
+			{
+				e.printStackTrace();			
+			}
 		
-		
-		
+	
+			return resultados;
 	
 	
-	
-	
-	
+		}
 }

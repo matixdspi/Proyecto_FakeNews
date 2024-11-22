@@ -15,13 +15,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 public class FakeNews_Menu extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
+	private JTextField textFiltrar;
 	private JTable table;
 	private DefaultTableModel tablaFakeNews;
 
@@ -35,21 +38,47 @@ public class FakeNews_Menu extends JPanel {
 		
 		
 		JScrollPane TablaFakeNews = new JScrollPane();
-		TablaFakeNews.setBounds(39, 102, 547, 285);
+		TablaFakeNews.setBounds(39, 102, 660, 327);
 		add(TablaFakeNews);
 		
 		table = new JTable();
 		TablaFakeNews.setViewportView(table);
-		Object[] columnas = new Object[] { "Titulo", "Fecha Aparicion", "Medio", "Categoria" };
+		Object[] columnas = new Object[] { "Titulo", "Fecha Aparicion","Creador", "Medio", "Categoria" };
 		tablaFakeNews = new DefaultTableModel(columnas, 0);
 		table.setModel(tablaFakeNews);
 		
-		textField = new JTextField();
-		textField.setBounds(73, 49, 398, 32);
-		add(textField);
-		textField.setColumns(10);
+		textFiltrar = new JTextField();
+		textFiltrar.setBounds(73, 49, 398, 32);
+		add(textFiltrar);
+		textFiltrar.setColumns(10);
 		
+		
+		//FILTRADO DE FAKE NEWS
 		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FakeNew_DAO edao = new FakeNew_DAO();
+				FakeNew fk = new FakeNew(textFiltrar.getText().toString(), null, null, 0, null, 0);
+				//LIMPIAR TABLA
+				tablaFakeNews.setRowCount(0);
+				//TRAER FAKE NEWS FILTRADAS
+				ArrayList<FakeNew> FakesFiltradas = edao.buscarPorTitulo(fk);
+			
+				for (FakeNew x : FakesFiltradas) 
+				{
+					tablaFakeNews.addRow(new Object[] {
+							
+							x.getTitulo(),
+							x.getFechaApa(),
+							x.getCreador(),
+							edao.buscar_MedioOrigenNombre(x.getMedioOrigen()),
+							edao.buscar_categorianNombre(x.getCategoria())		
+							
+					});
+				}
+			
+			}
+		});
 		btnFiltrar.setBounds(497, 54, 89, 23);
 		add(btnFiltrar);
 		
@@ -85,7 +114,7 @@ public class FakeNews_Menu extends JPanel {
 				
 			}
 		});
-		btnAltas.setBounds(333, 474, 89, 23);
+		btnAltas.setBounds(512, 474, 89, 23);
 		add(btnAltas);
 		
 		
@@ -93,16 +122,29 @@ public class FakeNews_Menu extends JPanel {
 		JButton btnModificacion = new JButton("MODIFICAR");
 		btnModificacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-				FakeNews_AltasyModificacion a = new FakeNews_AltasyModificacion();
+			int filaelegida = table.getSelectedRow();
+			FakeNew_DAO edao = new FakeNew_DAO();
+				if(filaelegida != -1)
+				{
+				String t = table.getValueAt(filaelegida, 0).toString();
+				LocalDate fechaApa = LocalDate.parse(table.getValueAt(filaelegida,1).toString());
+				String c = table.getValueAt(filaelegida,2).toString();
+				int medio = edao.buscar_categoriaNum(table.getValueAt(filaelegida,3).toString());
+				int cate = edao.buscar_MedioOrigenNum(table.getValueAt(filaelegida,4).toString());
+				FakeNew fk = new FakeNew(t, null , c, medio, fechaApa, cate);
+				
+				
+				
+				
+				
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
-				frame.setContentPane(a);
+				frame.setContentPane(new FakeNews_AltasyModificacion(fk));
 
 				frame.setVisible(true);
-			
+				}
 			}
 		});
-		btnModificacion.setBounds(451, 474, 102, 23);
+		btnModificacion.setBounds(665, 474, 102, 23);
 		add(btnModificacion);
 		
 		
@@ -110,12 +152,19 @@ public class FakeNews_Menu extends JPanel {
 		JButton btnBorrar = new JButton("BORRAR");
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int filaelegida = table.getSelectedRow();				
+				FakeNew_DAO edao = new FakeNew_DAO();
 				
-				
+				if (filaelegida != -1)
+				{
+					FakeNew fk = new FakeNew(table.getValueAt(filaelegida, 0).toString(), null, null, 0, null, 0);
+					System.out.println("TITULO ELEGIDO PARA BAJAS: " + fk.getTitulo());
+					edao.bajas_FakeNews(fk);
+				}
 				
 			}
 		});
-		btnBorrar.setBounds(594, 217, 89, 23);
+		btnBorrar.setBounds(729, 229, 89, 23);
 		add(btnBorrar);
 		
 		JButton btnVistaFakeNews = new JButton("VER");
@@ -128,14 +177,14 @@ public class FakeNews_Menu extends JPanel {
 				
 			}
 		});
-		btnVistaFakeNews.setBounds(596, 107, 89, 23);
+		btnVistaFakeNews.setBounds(729, 124, 89, 23);
 		add(btnVistaFakeNews);
 		
 		
 		FakeNew_DAO eDao = new FakeNew_DAO();
 		for (FakeNew x: eDao.traerFakenews()) {
 			
-			tablaFakeNews.addRow(new Object[] { x.getTitulo(), x.getFechaApa(), eDao.buscar_MedioOrigen(x.getMedioOrigen()), eDao.buscar_categoria(x.getCategoria()) });
+			tablaFakeNews.addRow(new Object[] { x.getTitulo(), x.getFechaApa(),x.getCreador(), eDao.buscar_MedioOrigenNombre(x.getMedioOrigen()), eDao.buscar_categorianNombre(x.getCategoria()),  });
 		}
 
 	}
