@@ -27,6 +27,8 @@ public class RefutacionRegistro extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textFechaRefutada;
 	private JTextField textFuentes;
+	private String titulofk;
+	JButton btnGuardar = new JButton("GUARDAR");
 	
 	JComboBox comboBox = new JComboBox(traerNombresRefutadores());
 	
@@ -67,10 +69,45 @@ public class RefutacionRegistro extends JPanel {
 		return nombresRefutadores;
 	}
 	//ALTAS DE REFUTACION
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public RefutacionRegistro(FakeNew fakenew) {
 		cargarComponentes(fakenew);
 
 	}
+	
+	//MODIFICACION DE REFUTACION
+	public RefutacionRegistro(FakeNew fakenew, Refutacion refu, String AnteriorFakeNew) {
+		cargarComponentes(fakenew);
+		precargarObjetos(refu);
+		btnGuardar.setVisible(false);
+		
+		JButton btnModificacion = new JButton("MODIFICAR");
+		btnModificacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 
+				FakeNew_DAO edao = new FakeNew_DAO();
+				String fuentes = textFuentes.getText().toString();
+				LocalDate fechaApa = LocalDate.parse(textFechaRefutada.getText());
+				boolean organismooficial = CheckBoxOrganismoOfi.isEnabled();
+
+				
+				Refutacion refut = new Refutacion(buscarRefutador(), fechaApa, fuentes, organismooficial);
+				
+				edao.refutacionModificacion(refut, fakenew, AnteriorFakeNew);
+				
+				
+				
+			}
+		});
+		btnModificacion.setBounds(279, 470, 149, 23);
+		add(btnModificacion);
+		btnModificacion.setVisible(true);
+		
+
+	}
+	
 	
 	
 	
@@ -114,7 +151,7 @@ setLayout(null);
 		
 		
 		//BOTON DE ALTAS
-		JButton btnGuardar = new JButton("GUARDAR");
+		
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 
@@ -133,7 +170,7 @@ setLayout(null);
 				
 			}
 		});
-		btnGuardar.setBounds(279, 466, 149, 30);
+		btnGuardar.setBounds(271, 455, 149, 30);
 		add(btnGuardar);
 		
 		JButton btnRefutadorMenu = new JButton("REFUTADORES");
@@ -151,9 +188,8 @@ setLayout(null);
 		btnRefutadorMenu.setBounds(571, 470, 108, 26);
 		add(btnRefutadorMenu);
 		
-		JButton btnModificacion = new JButton("MODIFICAR");
-		btnModificacion.setBounds(279, 470, 149, 23);
-		add(btnModificacion);
+		
+		
 		
 	}
 	
@@ -171,7 +207,4 @@ setLayout(null);
 			CheckBoxOrganismoOfi.setEnabled(false);
 		}
 	}
-	
-	
-	
 }
