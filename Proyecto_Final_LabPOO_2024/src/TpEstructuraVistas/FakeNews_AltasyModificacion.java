@@ -70,7 +70,7 @@ public class FakeNews_AltasyModificacion extends JPanel {
 				edao.actualizarFakeNews(fk, titulo);
 				
 
-				RefutacionRegistro menu = new RefutacionRegistro();
+				RefutacionRegistro menu = new RefutacionRegistro(fk);
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
 				frame.setContentPane(menu);
 
@@ -196,7 +196,7 @@ public class FakeNews_AltasyModificacion extends JPanel {
 				edao.FakeNews_Altas(fk);
 				
 
-				RefutacionRegistro menu = new RefutacionRegistro();
+				RefutacionRegistro menu = new RefutacionRegistro(fk);
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
 				frame.setContentPane(menu);
 

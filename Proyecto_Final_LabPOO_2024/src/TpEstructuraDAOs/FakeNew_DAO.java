@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import TpEstructuraModelos.FakeNew;
 import TpEstructuraModelos.Refutacion;
+import TpEstructuraModelos.Refutador;
 
 public class FakeNew_DAO {
 	
@@ -390,5 +391,97 @@ public class FakeNew_DAO {
 		
 		
 		
+		public void refutacionModificacion(Refutacion r, FakeNew fk, String titulofk)
+		{
+			String sqlModificarRefutacion = "UPDATE  Refutacion SET fechaRetr = ?, fuentesOrigen = ?, organismoOfi = ? , fakenew = ? , refutador = ? WHERE fakenew = ?;";
+			Connection conexion = conectar();
+			try {
+				
+				System.out.println("CONECTO ALTAS FAKE NEW");
+				// QUERYS SQL
+				PreparedStatement psInsertarRN = conexion.prepareStatement(sqlModificarRefutacion);
+		
+
+				// Insertar TABLA INTERMEDIA Fake News
+				psInsertarRN.setDate(1, java.sql.Date.valueOf(r.getFechaRefutada()));
+				psInsertarRN.setString(2, r.getFuentes());
+				psInsertarRN.setBoolean(3, r.isOrganismoOficial());
+				psInsertarRN.setString(4, fk.getTitulo());
+				psInsertarRN.setString(5, titulofk);
+				
+
+		
+
+				int affectedRows = psInsertarRN.executeUpdate();
+				System.out.println("INSERTO MODIFICACION REFUTACIOn");
+				
+			} catch (SQLException x) {
+				// TODO Auto-generated catch block
+				x.printStackTrace();
+			} finally {
+				if (conexion != null) {
+					try {
+						conexion.close();
+					} catch (SQLException x) {
+						// TODO: handle exception
+						x.printStackTrace();
+					}
+				}
+			}
+		}
+		
+		
+		
+		
+		public Refutacion buscarRefutacion(FakeNew fk)
+		{
+			
+			Refutacion r = new Refutacion(null, null, null, false);
+			String sqlSeleccionarRefutacion = "SELECT fechaRetr,fuentesOrigen,organismoOfi,refutador FROM Refutacion;";
+			Connection conexion = conectar();
+			try {
+				
+				System.out.println("CONECTO ALTAS FAKE NEW");
+				// QUERYS SQL
+
+				PreparedStatement stmt = conexion.prepareStatement(sqlSeleccionarRefutacion);
+
+				ResultSet rs = stmt.executeQuery(sqlSeleccionarRefutacion);
+
+		
+
+				// Insertar TABLA INTERMEDIA Fake News
+				LocalDate fechaApa = rs.getDate("fechaApa").toLocalDate();
+				String fuente = rs.getString("fuentesOrigen");
+				boolean organismo = rs.getBoolean("organismoOfi");
+				
+				String refutador = rs.getString("refutador");
+				Refutador refu = new Refutador(refutador, null, null);
+				
+					r.setRefutador(refu);
+ 					r.setFechaRefutada(fechaApa);
+ 					r.setFuentes(fuente); 
+ 					r.setOrganismoOficial(organismo);
+		
+				System.out.println("INSERTO MODIFICACION REFUTACIOn");
+				
+			} catch (SQLException x) {
+				// TODO Auto-generated catch block
+				x.printStackTrace();
+			} finally {
+				if (conexion != null) {
+					try {
+						conexion.close();
+					} catch (SQLException x) {
+						// TODO: handle exception
+						x.printStackTrace();
+					}
+				}
+			}
+			
+			
+			
+			return r;
+		}
 		
 }
