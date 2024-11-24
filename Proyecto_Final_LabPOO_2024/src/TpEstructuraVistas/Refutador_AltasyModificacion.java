@@ -18,6 +18,7 @@ public class Refutador_AltasyModificacion extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNombre;
+	private String test;
 	private JTextField textFieldApellido;
 	JComboBox comboBoxMedio = new JComboBox(mediosVector());
 	
