@@ -111,7 +111,7 @@ public class FakeNew_DAO {
 	public static Connection conectar() {
 		String url = "jdbc:mysql://localhost:3306/tp_poo";
 		String usr = "root";
-		String pass = "mapadou2342";
+		String pass = "tu_contraseña";
 		Connection conexion = null;
 		try {
 			conexion = DriverManager.getConnection(url, usr, pass);
