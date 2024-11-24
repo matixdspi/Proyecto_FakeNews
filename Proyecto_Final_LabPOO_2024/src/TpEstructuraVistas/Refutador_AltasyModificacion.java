@@ -2,6 +2,7 @@ package TpEstructuraVistas;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import TpEstructuraDAOs.FakeNew_DAO;
 import TpEstructuraDAOs.RefutadorDAO;
@@ -11,20 +12,46 @@ import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 public class Refutador_AltasyModificacion extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNombre;
-	private String test2;
 	private JTextField textFieldApellido;
-	JComboBox comboBoxMedio = new JComboBox(mediosVector());
+	JComboBox comboBoxMediosOrigen = new JComboBox(mediosVector());
+	JButton btnGuardar = new JButton("Guardar");
 	
 	/**
 	 * Create the panel.
 	 */
+	
+	public Refutador_AltasyModificacion(Refutador r) { //si es que recibe datos
+		agregarComponentes();
+		precargarObjeto(r); //cargar los jtextfield
+		btnGuardar.setVisible(false);
+		
+		JButton botonModificar= new JButton("Modificar");
+
+		botonModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//capturar los datos nuevos
+				//llamar al dao y el metodo para modificar
+				RefutadorDAO edao = new RefutadorDAO();
+				int MedioOrigenNumero = comboBoxMediosOrigen.getSelectedIndex() + 1;
+				String MedioOrigenNombre = edao.buscar_MedioOrigenNombre(MedioOrigenNumero);
+				Refutador refu = new Refutador(textFieldNombre.getText(),textFieldApellido.getText(), MedioOrigenNombre);
+				System.out.println("nombre: " + refu.getNombre() + "apellido: " + refu.getApellido());
+				edao.modificacion(r.getApellido(), refu, MedioOrigenNumero);
+			}
+		});
+		botonModificar.setBounds(171, 231, 89, 23);
+		add(botonModificar);
+		botonModificar.setVisible(true);
+	}
 	
 	public String[] mediosVector() {
 		String[] medios = new String[3];
@@ -41,7 +68,12 @@ public class Refutador_AltasyModificacion extends JPanel {
 		textFieldApellido.setText(r.getApellido());
 	}
 	
-	public Refutador_AltasyModificacion() {
+	public Refutador_AltasyModificacion() { //en caso de no recibir datos
+		agregarComponentes(); // constructor para agregar
+
+	}
+	
+	public void agregarComponentes() {
 		
 		
 		setLayout(null);
@@ -64,25 +96,34 @@ public class Refutador_AltasyModificacion extends JPanel {
 		add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
-		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Refutador refu = new Refutador(textFieldNombre.getText(),textFieldApellido.getText(), null);
-				System.out.println("nombre: " + refu.getNombre() + "apellido: " + refu.getApellido());
 				RefutadorDAO edao = new RefutadorDAO();
-				edao.altas(refu);
+				int MedioOrigenNumero = comboBoxMediosOrigen.getSelectedIndex() + 1;
+				String MedioOrigenNombre = edao.buscar_MedioOrigenNombre(MedioOrigenNumero);
+				Refutador refu = new Refutador(textFieldNombre.getText(),textFieldApellido.getText(), MedioOrigenNombre);
+				System.out.println("nombre: " + refu.getNombre() + "apellido: " + refu.getApellido());
+				edao.altas(refu, MedioOrigenNumero);
 			}
 		});
 		btnGuardar.setBounds(317, 247, 89, 23);
 		add(btnGuardar);
 		
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
+				frame.setContentPane(new RefutadorMenu());
+				frame.setVisible(true);
+			}
+		});
 		btnVolver.setBounds(30, 247, 89, 23);
 		add(btnVolver);
 		
-		JComboBox comboBoxMedio = new JComboBox();
-		comboBoxMedio.setBounds(274, 104, 86, 22);
-		add(comboBoxMedio);
+
+		comboBoxMediosOrigen.setBounds(262, 118, 142, 29);
+		add(comboBoxMediosOrigen);
+		
 		
 	}
 }

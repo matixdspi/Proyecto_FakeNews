@@ -27,7 +27,7 @@ public class RefutadorMenu extends JPanel {
 		
 		// Creacion de panel y asignar las filas
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 28, 292, 213);
+		scrollPane.setBounds(41, 28, 323, 213);
 		add(scrollPane);
 		table = new JTable();
 		scrollPane.setViewportView(table);
@@ -38,7 +38,7 @@ public class RefutadorMenu extends JPanel {
 		// Llenar panel
 		RefutadorDAO eDao = new RefutadorDAO();
 		for (Refutador e : eDao.traerRefutador()) {
-			tablaRefutadores.addRow(new Object[] { e.getNombre(), e.getApellido() });
+			tablaRefutadores.addRow(new Object[] { e.getNombre(), e.getApellido() , e.getMedio()});
 		}
 		
 		// Actualizar panel - boton re cargar
@@ -51,7 +51,7 @@ public class RefutadorMenu extends JPanel {
 				RefutadorDAO eDAO = new RefutadorDAO();
 				for (Refutador e1 : eDAO.traerRefutador()) {
 					// Agregar una fila a la tabla por cada estudiante.
-					tablaRefutadores.addRow(new Object[] { e1.getNombre(), e1.getApellido() });
+					tablaRefutadores.addRow(new Object[] { e1.getNombre(), e1.getApellido(), e1.getMedio() });
 			}}
 		});
 		btnReCargar.setBounds(397, 42, 89, 23);
@@ -76,11 +76,12 @@ public class RefutadorMenu extends JPanel {
 				if (filaelegida != -1) {
 					String Nombre = table.getValueAt(filaelegida, 0).toString();
 					String Apellido = table.getValueAt(filaelegida, 1).toString();
-					Refutador a = new Refutador(Nombre, Apellido, null);
+					String MedioNombre = table.getValueAt(filaelegida, 2).toString();
+					Refutador a = new Refutador(Nombre, Apellido, MedioNombre);
 				
 
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
-				frame.setContentPane(new Refutador_AltasyModificacion(/*agregar refutador dsp en altas y modfiicacion*/));
+				frame.setContentPane(new Refutador_AltasyModificacion(a));
 				frame.setVisible(true);
 				}}
 		});
