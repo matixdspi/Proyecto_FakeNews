@@ -112,7 +112,7 @@ public class FakeNew_DAO {
 	public static Connection conectar() {
 		String url = "jdbc:mysql://localhost:3306/tp_poo";
 		String usr = "root";
-		String pass = "mapadou2342";
+		String pass = "tu_contraseña";
 		Connection conexion = null;
 		try {
 			conexion = DriverManager.getConnection(url, usr, pass);
@@ -186,24 +186,17 @@ public class FakeNew_DAO {
 	}
 	
 	public FakeNew verFakeNews(FakeNew Fake) {
-	    Connection conexion = conectar(); // Método que conecta a la base de datos
+	    Connection conexion = conectar(); 
 	    try {
 	        System.out.println("Conecto verFakeNews");
 	        
-	        // Consulta SQL con un marcador de posición
 	        String sql = "SELECT titulo, descripcion, creador, fechaApa, medioOrigen, categoria FROM fakenews WHERE titulo = ?";
 	        
 	        PreparedStatement stmt = conexion.prepareStatement(sql);
-	        
-	        // Asigna el valor al marcador de posición
 	        stmt.setString(1, Fake.getTitulo());
-	        
-	        // Ejecuta la consulta
 	        ResultSet rs = stmt.executeQuery();
 	        
-	        // Verifica si hay resultados
 	        if (rs.next()) {
-	            // Extrae los datos del resultado
 	            String titulo = rs.getString("titulo");
 	            String descripcion = rs.getString("descripcion");
 	            String creador = rs.getString("creador");
@@ -211,10 +204,8 @@ public class FakeNew_DAO {
 	            int medioOrigen = rs.getInt("medioOrigen");
 	            int categoria = rs.getInt("categoria");
 	            
-	            // Crea una nueva instancia de FakeNew con los datos obtenidos
 	            Fake = new FakeNew(titulo, descripcion, creador, medioOrigen, fechaApa, categoria);
 	            System.out.println("Fecha en Fake: " + Fake.getFechaApa());
-	            // Imprime los datos obtenidos
 	            System.out.println("Titulo: " + titulo 
 	                    + " Descripcion: " + descripcion 
 	                    + " Creador: " + creador
@@ -234,7 +225,7 @@ public class FakeNew_DAO {
 	        }
 	    }
 
-	    return Fake; // Devuelve el objeto actualizado
+	    return Fake; 
 	}
 
 	
