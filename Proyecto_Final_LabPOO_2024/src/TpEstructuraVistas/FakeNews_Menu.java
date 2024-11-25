@@ -170,11 +170,16 @@ public class FakeNews_Menu extends JPanel {
 		JButton btnVistaFakeNews = new JButton("VER");
 		btnVistaFakeNews.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-
-				
-				
+				FakeNew_DAO edao = new FakeNew_DAO();
+				int filaelegida = table.getSelectedRow();	
+				if(filaelegida != -1)
+				{
+					String t = table.getValueAt(filaelegida, 0).toString();
+					FakeNew fk = new FakeNew(t, null , null, 0, null, 0);
+					JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
+					frame.setContentPane(new FakeNews_Ver(edao.verFakeNews(fk)));
+					frame.setVisible(true);
+				}
 			}
 		});
 		btnVistaFakeNews.setBounds(729, 124, 89, 23);

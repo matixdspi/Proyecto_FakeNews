@@ -185,6 +185,58 @@ public class FakeNew_DAO {
 		return FakeNewS;
 	}
 	
+	public FakeNew verFakeNews(FakeNew Fake) {
+	    Connection conexion = conectar(); // Método que conecta a la base de datos
+	    try {
+	        System.out.println("Conecto verFakeNews");
+	        
+	        // Consulta SQL con un marcador de posición
+	        String sql = "SELECT titulo, descripcion, creador, fechaApa, medioOrigen, categoria FROM fakenews WHERE titulo = ?";
+	        
+	        PreparedStatement stmt = conexion.prepareStatement(sql);
+	        
+	        // Asigna el valor al marcador de posición
+	        stmt.setString(1, Fake.getTitulo());
+	        
+	        // Ejecuta la consulta
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        // Verifica si hay resultados
+	        if (rs.next()) {
+	            // Extrae los datos del resultado
+	            String titulo = rs.getString("titulo");
+	            String descripcion = rs.getString("descripcion");
+	            String creador = rs.getString("creador");
+	            LocalDate fechaApa = rs.getDate("fechaApa").toLocalDate();
+	            int medioOrigen = rs.getInt("medioOrigen");
+	            int categoria = rs.getInt("categoria");
+	            
+	            // Crea una nueva instancia de FakeNew con los datos obtenidos
+	            Fake = new FakeNew(titulo, descripcion, creador, medioOrigen, fechaApa, categoria);
+	            System.out.println("Fecha en Fake: " + Fake.getFechaApa());
+	            // Imprime los datos obtenidos
+	            System.out.println("Titulo: " + titulo 
+	                    + " Descripcion: " + descripcion 
+	                    + " Creador: " + creador
+	                    + " Fecha Aparicion: " + fechaApa 
+	                    + " Medio Origen: " + buscar_MedioOrigenNombre(medioOrigen) 
+	                    + " Categoria: " + buscar_categorianNombre(categoria));
+	        } 
+	    } catch (SQLException x) {
+	        x.printStackTrace();
+	    } finally {
+	        if (conexion != null) {
+	            try {
+	                conexion.close();
+	            } catch (SQLException x) {
+	                x.printStackTrace();
+	            }
+	        }
+	    }
+
+	    return Fake; // Devuelve el objeto actualizado
+	}
+
 	
 	
 	public void FakeNews_Altas(FakeNew fakeNew) {
