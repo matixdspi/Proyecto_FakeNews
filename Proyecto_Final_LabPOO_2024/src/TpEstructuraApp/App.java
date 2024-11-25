@@ -16,7 +16,7 @@ public class App {
 		marco.setVisible(true);
 		marco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		marco.setBounds(0, 0, 1280, 720);
-		RefutadorMenu inicio = new RefutadorMenu();
+		MenuPrincipal inicio = new MenuPrincipal();
 		marco.setContentPane(inicio);
 		marco.validate();
 		

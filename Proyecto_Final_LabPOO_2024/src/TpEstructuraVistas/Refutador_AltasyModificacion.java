@@ -9,7 +9,6 @@ import TpEstructuraDAOs.RefutadorDAO;
 import TpEstructuraModelos.Refutador;
 
 import javax.swing.JLabel;
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.Component;
