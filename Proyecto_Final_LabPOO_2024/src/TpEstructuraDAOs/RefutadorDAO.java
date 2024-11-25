@@ -106,7 +106,7 @@ public class RefutadorDAO {
 	{
 		String url = "jdbc:mysql://localhost:3306/tp_poo";
 		String usr =	"root";
-		String pass =	"tu_contraseña";
+		String pass =	"admin";
 		Connection conexion = null;
 		try {
 			conexion = DriverManager.getConnection(url,usr,pass);
@@ -262,7 +262,7 @@ public class RefutadorDAO {
 		Connection conexion  = conectar();
 		try {
 			System.out.println("Conexion correcta - TRAER REFUTADORES");
-			String sql = ("SELECT nombre, apellido, medio FROM refutador Where nombre = ?");
+			String sql = ("SELECT nombre, apellido, medio FROM refutador WHERE nombre = ?;");
 	
 			PreparedStatement stmt = conexion.prepareStatement(sql);
 			stmt.setString(1, r.getNombre());

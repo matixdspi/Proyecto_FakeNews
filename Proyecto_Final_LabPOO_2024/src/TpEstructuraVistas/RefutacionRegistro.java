@@ -10,6 +10,7 @@ import javax.swing.SwingUtilities;
 
 
 import TpEstructuraDAOs.FakeNew_DAO;
+import TpEstructuraDAOs.RefutacionDAO;
 import TpEstructuraDAOs.RefutadorDAO;
 import TpEstructuraModelos.FakeNew;
 import TpEstructuraModelos.Refutacion;
@@ -87,7 +88,7 @@ public class RefutacionRegistro extends JPanel {
 		btnModificacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 
-				FakeNew_DAO edao = new FakeNew_DAO();
+				RefutacionDAO edao = new RefutacionDAO();
 				String fuentes = textFuentes.getText().toString();
 				LocalDate fechaApa = LocalDate.parse(textFechaRefutada.getText());
 				boolean organismooficial = CheckBoxOrganismoOfi.isEnabled();
@@ -155,7 +156,7 @@ setLayout(null);
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 
-				FakeNew_DAO edao = new FakeNew_DAO();
+				RefutacionDAO edao = new RefutacionDAO();
 				
 				String fuentes = textFuentes.getText().toString();
 				LocalDate fechaApa = LocalDate.parse(textFechaRefutada.getText());

@@ -5,6 +5,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import TpEstructuraDAOs.FakeNew_DAO;
+import TpEstructuraDAOs.RefutacionDAO;
 import TpEstructuraDAOs.RefutadorDAO;
 import TpEstructuraModelos.FakeNew;
 import TpEstructuraModelos.Refutacion;
@@ -29,6 +30,7 @@ public class FakeNews_Ver extends JPanel {
 	private JTextField textFieldMedio;
 	private JTextField textFieldCate;
 	FakeNew_DAO fa = new FakeNew_DAO();
+	RefutacionDAO reda = new RefutacionDAO();
 	private JTextField textFechaRefutacion;
 	private JTextField textFuentesRefutacion;
 	private JTextField textNombreRefutador;
@@ -171,6 +173,7 @@ public class FakeNews_Ver extends JPanel {
 		lblNewLabel_8.setBounds(419, 466, 46, 14);
 		add(lblNewLabel_8);
 		CargarFakeNew(r);
+		cargarRefutacion(r);
 	}
 	
 	public void CargarFakeNew(FakeNew r) {
@@ -194,17 +197,17 @@ public class FakeNews_Ver extends JPanel {
 	{
 		
 		RefutadorDAO rdao = new RefutadorDAO();
-		Refutacion refu = fa.buscarRefutacion(r);
+		Refutacion refu = reda.buscarRefutacion(r);
 		
 		textFechaRefutacion.setText(refu.getFechaRefutada().toString());
 		textFuentesRefutacion.setText(refu.getFuentes());
 		if ( refu.isOrganismoOficial() == true)
 		{
-			 chckbxOrganisOfi.setEnabled(true);
+			 chckbxOrganisOfi.setSelected(true);
 		}
 		else 
 		{
-			chckbxOrganisOfi.setEnabled(false);
+			chckbxOrganisOfi.setSelected(false);
 		}
 		
 		
