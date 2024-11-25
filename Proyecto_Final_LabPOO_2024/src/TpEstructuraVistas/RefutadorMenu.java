@@ -109,7 +109,7 @@ public class RefutadorMenu extends JPanel {
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
-				frame.setContentPane(new RefutacionRegistro(null));
+				frame.setContentPane(new RefutacionRegistro());
 				frame.setVisible(true);
 			}
 		});

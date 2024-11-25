@@ -44,7 +44,7 @@ public class MenuPrincipal extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			
 				
-				FakeNews_Menu pan = new FakeNews_Menu();
+				MediosDivulgacion_AltasyModificacion pan = new MediosDivulgacion_AltasyModificacion();
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
 				frame.setContentPane(pan);
 
