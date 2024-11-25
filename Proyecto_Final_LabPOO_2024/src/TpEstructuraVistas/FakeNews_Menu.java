@@ -180,17 +180,6 @@ public class FakeNews_Menu extends JPanel {
 		btnVistaFakeNews.setBounds(729, 124, 89, 23);
 		add(btnVistaFakeNews);
 		
-		JButton btnRefutador = new JButton("REFUTADORES");
-		btnRefutador.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
-				frame.setContentPane(new RefutadorMenu());
-				frame.setVisible(true);
-			}
-		});
-		btnRefutador.setBounds(712, 54, 117, 23);
-		add(btnRefutador);
-		
 		
 		FakeNew_DAO eDao = new FakeNew_DAO();
 		for (FakeNew x: eDao.traerFakenews()) {
