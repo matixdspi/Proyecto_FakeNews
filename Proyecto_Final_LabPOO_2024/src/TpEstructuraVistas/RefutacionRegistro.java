@@ -47,8 +47,8 @@ public class RefutacionRegistro extends JPanel {
 		Refutador refi = new Refutador(null, null, null);
 
 		for (Refutador x : me) {
-			if (x.getNombre() == comboBox.getSelectedItem()) {
-				refi = x;
+			if (x.getNombre().equals(comboBox.getSelectedItem().toString())) {
+	            refi = x;
 			}
 		}
 

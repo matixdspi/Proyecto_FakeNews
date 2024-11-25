@@ -485,7 +485,7 @@ public class FakeNew_DAO {
 			try {
 				
 				System.out.println("CONECTO ALTAS FAKE NEW");
-				// QUERYS SQL
+			
 
 				PreparedStatement stmt = conexion.prepareStatement(sqlSeleccionarRefutacion);
 
@@ -493,7 +493,7 @@ public class FakeNew_DAO {
 
 		
 
-				// Insertar TABLA INTERMEDIA Fake News
+				
 				LocalDate fechaApa = rs.getDate("fechaApa").toLocalDate();
 				String fuente = rs.getString("fuentesOrigen");
 				boolean organismo = rs.getBoolean("organismoOfi");
@@ -526,5 +526,8 @@ public class FakeNew_DAO {
 			
 			return r;
 		}
+		
+		
+		
 		
 }

@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
+import TpEstructuraModelos.Refutacion;
 import TpEstructuraModelos.Refutador;
 	
 
@@ -252,6 +252,51 @@ public class RefutadorDAO {
 			}
 		}
 
+	}
+	
+	
+	public Refutador buscarRefutador(Refutador r) {
+		// Objetos de prueba
+	
+		
+		Connection conexion  = conectar();
+		try {
+			System.out.println("Conexion correcta - TRAER REFUTADORES");
+			String sql = ("SELECT nombre, apellido, medio FROM refutador Where nombre = ?");
+	
+			PreparedStatement stmt = conexion.prepareStatement(sql);
+			stmt.setString(1, r.getNombre());
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next())
+			{
+				String nombre = rs.getString("nombre");
+				String apellido = rs.getString("apellido");
+				int numeroMedio = rs.getInt("medio");
+				String nombreMedio = buscar_MedioOrigenNombre(numeroMedio);
+				
+				Refutador refutadorTraido = new Refutador(nombre, apellido, nombreMedio);
+				System.out.println("Nombre: " + nombre  + " Apellido: " + apellido + " Nombre del Medio: " + nombreMedio);
+				r = refutadorTraido;
+			}
+			} 
+		catch (SQLException x) 
+		{
+			// TODO Auto-generated catch block
+			x.printStackTrace();
+		}	
+		finally 
+		{
+			if (conexion != null)
+			{
+				try {
+					conexion.close();
+				} catch (SQLException x) {
+					// TODO: handle exception
+					x.printStackTrace();
+				}
+			}
+		}
+		return r;
 	}
 }
 	
