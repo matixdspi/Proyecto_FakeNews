@@ -62,13 +62,13 @@ public class FakeNews_AltasyModificacion extends JPanel {
 				int MedioOrigen = comboBoxMediosOrigen.getSelectedIndex() + 1;
 				int Categoria = comboBoxCategorias.getSelectedIndex() + 1;
 				//IGUALACION A UN OBJETO DE FAKE NEW
-				FakeNew fk = new FakeNew(Titulo, Desc, Creador, MedioOrigen, fechaApa , Categoria);
+				FakeNew fkp = new FakeNew(Titulo, Desc, Creador, MedioOrigen, fechaApa , Categoria);
 				
 				FakeNew_DAO edao = new FakeNew_DAO();
-				edao.actualizarFakeNews(fk, titulo);
+				edao.actualizarFakeNews(fkp, titulo);
 				
 
-				RefutacionRegistro menu = new RefutacionRegistro(fk);
+				RefutacionRegistro menu = new RefutacionRegistro(fkp,edao.buscarRefutacion(fk),titulo);
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
 				frame.setContentPane(menu);
 

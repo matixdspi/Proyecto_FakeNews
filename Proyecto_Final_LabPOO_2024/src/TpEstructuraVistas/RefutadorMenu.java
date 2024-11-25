@@ -105,6 +105,20 @@ public class RefutadorMenu extends JPanel {
 		btnEliminar.setBounds(397, 220, 89, 23);
 		add(btnEliminar);
 		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
+				frame.setContentPane(new FakeNews_Menu());
+				frame.setVisible(true);
+			}
+			
+			
+		});
+		btnVolver.setBounds(10, 276, 89, 23);
+		add(btnVolver);
+		
 		
 		
 		

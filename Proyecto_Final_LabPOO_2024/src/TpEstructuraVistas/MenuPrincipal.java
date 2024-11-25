@@ -43,9 +43,8 @@ public class MenuPrincipal extends JPanel {
 		btnAsignarMedios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				MediosDivulgacion_AltasyModificacion pana = new MediosDivulgacion_AltasyModificacion();
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
-				frame.setContentPane(pana);
+				frame.setContentPane(new MediosDivulgacion_AltasyModificacion());
 				frame.setVisible(true);
 			
 			
