@@ -106,7 +106,7 @@ public class RefutadorDAO {
 	{
 		String url = "jdbc:mysql://localhost:3306/tp_poo";
 		String usr =	"root";
-		String pass =	"tu_contraseña";
+		String pass =	"mapadou2342";
 		Connection conexion = null;
 		try {
 			conexion = DriverManager.getConnection(url,usr,pass);

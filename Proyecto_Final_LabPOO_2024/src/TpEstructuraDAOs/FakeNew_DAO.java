@@ -112,7 +112,7 @@ public class FakeNew_DAO {
 	public static Connection conectar() {
 		String url = "jdbc:mysql://localhost:3306/tp_poo";
 		String usr = "root";
-		String pass = "tu_contraseña";
+		String pass = "mapadou2342";
 		Connection conexion = null;
 		try {
 			conexion = DriverManager.getConnection(url, usr, pass);
@@ -515,7 +515,7 @@ public class FakeNew_DAO {
  					r.setFuentes(fuente); 
  					r.setOrganismoOficial(organismo);
 		
-				System.out.println("INSERTO MODIFICACION REFUTACIOn");
+				System.out.println("TRAJO REFUTACIOn");
 				
 			} catch (SQLException x) {
 				// TODO Auto-generated catch block

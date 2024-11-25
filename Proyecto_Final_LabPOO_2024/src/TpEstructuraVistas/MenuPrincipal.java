@@ -42,12 +42,9 @@ public class MenuPrincipal extends JPanel {
 		JButton btnAsignarMedios = new JButton("Asignar Medios");
 		btnAsignarMedios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
 				
-				FakeNews_Menu pan = new FakeNews_Menu();
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
-				frame.setContentPane(pan);
-
+				frame.setContentPane(new MediosDivulgacion_AltasyModificacion());
 				frame.setVisible(true);
 			
 			
@@ -61,9 +58,9 @@ public class MenuPrincipal extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				FakeNews_Menu pan = new FakeNews_Menu();
+				FakeNews_Menu panas = new FakeNews_Menu();
 				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
-				frame.setContentPane(pan);
+				frame.setContentPane(panas);
 
 				frame.setVisible(true);
 			}
